@@ -44,6 +44,7 @@ if((NOT DEFINED CURL_INCLUDE_DIR
     endif()
   endif()
 
+
   set(${proj}_CMAKE_C_FLAGS ${ep_common_c_flags})
   if(CMAKE_SIZEOF_VOID_P EQUAL 8) # 64-bit
     set(${proj}_CMAKE_C_FLAGS "${ep_common_c_flags} -fPIC")
@@ -57,7 +58,7 @@ if((NOT DEFINED CURL_INCLUDE_DIR
 
   ExternalProject_SetIfNotDefined(
     Slicer_${proj}_GIT_TAG
-    "c5e0ea129b9d187214156f0f704e43ef45ff1aec" # curl-7_34_0-maint
+    "curl-7_70_0" # curl-7_70_0 support openssl 1.1.1g
     QUIET
     )
 
@@ -101,6 +102,8 @@ if((NOT DEFINED CURL_INCLUDE_DIR
       -DCURL_DISABLE_TFTP:BOOL=ON
       -DHAVE_LIBIDN:BOOL=FALSE
       -DCMAKE_USE_OPENSSL:BOOL=${CURL_ENABLE_SSL}
+      -DCMAKE_BUILD_TYPE:STRING=Release
+      -DBUILD_SHARED_LIBS:BOOL=OFF
     ${EXTERNAL_PROJECT_OPTIONAL_CMAKE_ARGS}
     DEPENDS
       ${${proj}_DEPENDENCIES}
